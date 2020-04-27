@@ -1,0 +1,69 @@
+#1.cleaning the workspace and setting the working directory
+rm(list=ls())
+ls()
+setwd("E:\\4th Year\\Big data\\lab1")
+
+#2,3.importing data, exploring
+d = read.csv("titanic.csv")
+d
+dim(d)
+head(d,n = 10)
+tail(d,n = 10)
+summary(d)
+
+
+#4.exploring variables
+summary(d$Age)
+table(d$Age)
+Age = d$Age
+help(is.na) 
+is.na(Age)
+emb = d$Embarked
+is.factor(emb)
+levels(emb)
+
+#5.preprocessing
+noNA = na.omit(d)
+for (i in nrow(noNA)) {
+  if(is.na(noNA$Age[i])){
+    print('there are NA in Age')
+    break()
+  }
+}
+
+if(i == nrow(noNA)){
+  print('there are no NA in Age')
+}
+
+noNA = noNA[noNA$Embarked != "" ,c("PassengerId","Survived","Pclass","Name","Gender","Age","SibSp","Parch","Fare","Embarked")]
+noNA
+factor(noNA$Embarked)
+levels(noNA$Embarked)
+
+#6.statistics
+mF = table(noNA$Gender)
+color <- c("red" , "blue")
+pie(mF , col = color)
+
+table(noNA[(noNA$Survived == 1) & (noNA$Gender == "female"), c("Gender")])
+table(noNA[noNA$Survived == 0 & noNA$Gender == "female" ,c("Gender")])
+table(noNA[(noNA$Survived == 1) & (noNA$Gender == "male"), c("Gender")])
+table(noNA[noNA$Survived == 0 & noNA$Gender == "male" ,c("Gender")])
+surv = table(noNA[noNA$Survived == 1 , c("Gender")])
+pie(surv , col = color)
+
+table(noNA[noNA$Survived == 1 & noNA$Pclass == 1 , c("Pclass")])
+table(noNA[noNA$Survived == 0 & noNA$Pclass == 1 , c("Pclass")])
+table(noNA[noNA$Survived == 1 & noNA$Pclass == 2 , c("Pclass")])
+table(noNA[noNA$Survived == 0 & noNA$Pclass == 2 , c("Pclass")])
+table(noNA[noNA$Survived == 1 & noNA$Pclass == 3 , c("Pclass")])
+table(noNA[noNA$Survived == 0 & noNA$Pclass == 3 , c("Pclass")])
+survC = table(noNA$Survived ,noNA$Pclass)
+barplot(survC , col=c("red","blue") , legend = rownames(survC))
+S  = table(noNA$Survived)
+boxplot(noNA$Age)
+plot((noNA$Age))
+
+#7.exporting
+NS = noNA[c('Name','Survived')]
+write.csv(NS,file = "NS.csv")

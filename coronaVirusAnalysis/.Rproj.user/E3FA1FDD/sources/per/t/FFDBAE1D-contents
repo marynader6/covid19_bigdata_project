@@ -1,0 +1,19 @@
+library("xts")
+
+setwd("E:\\4th Year\\Big data\\project")
+confDF <- read.csv("time_series_covid_19_confirmed.csv",header = FALSE)
+confDF <- confDF[98,]
+confDF <- confDF[-1]
+confDF <- confDF[-2]
+confDF <- confDF[-2]
+confDF <- confDF[-1]
+confDF <- t(confDF)
+#confDF <- as.ts(confDF)
+confDF <- xts(confDF[,-1], order.by=as.Date(confDF[,1], "%d/%m/%Y"))
+conf <- confDF[100,]
+conf <- unlist(c(conf),use.names = FALSE)
+conf <- as.numeric(as.vector(conf))
+dates <- seq.Date(as.Date("2020-1-22"),as.Date("2020-4-13"),"day")
+confTS <- ts(conf,start = c(2020,as.numeric(format(dates[1],"%j"))), frequency = 365)
+cDF <- as.data.frame(confTS)
+plot(confTS)

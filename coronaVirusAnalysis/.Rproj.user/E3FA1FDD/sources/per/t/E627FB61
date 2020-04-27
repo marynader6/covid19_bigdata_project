@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1587588404966.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4209081595",
+    "id" : "E627FB61",
+    "lastKnownWriteTime" : 1581977064,
+    "last_content_update" : 1581977064,
+    "path" : "E:/4th Year/Big data/lab1/S20-BDA-Lab1.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "148,0",
+        "scrollLine" : "135"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
