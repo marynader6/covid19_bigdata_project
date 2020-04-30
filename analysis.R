@@ -62,6 +62,10 @@ diedF <- table(analysisData[analysisData$gender== "F" , c("death")]) # Females d
 
 
 #-------------------------------analysing dates --------------------------------------
+analysisData$date_onset_symptoms <- as.Date(as.character(analysisData$date_onset_symptoms),"%Y-%m-%d")
+analysisData$date_admission_hospital <- as.Date(as.character(analysisData$date_admission_hospital),"%Y-%m-%d")
+analysisData$date_confirmation <- as.Date(as.character(analysisData$date_confirmation),"%Y-%m-%d")
+
 analysisData$diff_ad_onset <- abs(analysisData$date_admission_hospital- analysisData$date_onset_symptoms)
 analysisData$diff_con_ad <- abs(analysisData$date_confirmation- analysisData$date_admission_hospital)
 analysisData$diff_con_onset <- abs(analysisData$date_confirmation- analysisData$date_onset_symptoms)
