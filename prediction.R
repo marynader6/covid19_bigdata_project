@@ -3,7 +3,7 @@ require(forecast)
 require(TSPred)
 
 rm(list = ls())
-setwd("E:\\4th Year\\Big data\\project")
+setwd("E:\\4th Year\\Big data\\project\\covid19_bigdata_project")
 confirmed <- read.table("confirmed.csv", header=TRUE, sep=",")
 confirmed2 <- read.table("confirmed2.csv",header=TRUE, sep=",")
 #confirmed <- confirmed[24:93,]
