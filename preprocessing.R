@@ -4,24 +4,20 @@ library("lubridate")
 
 #-----------------------confirmed timeseries preprocessing------------
 confDF <- read.csv("time_series_covid_19_confirmed.csv",header=TRUE,sep = ",")
-confDF <- confDF[-1]
-confDF <- confDF[-1]
-confDF <- confDF[-1]
-confDF <- confDF[-1]
+Drops = c("Province.State","Country.Region","Lat","Long")
+confDF <- confDF[,!(names(confDF) %in% Drops)]
 conf <- confDF[99,]
 conf <- unlist(c(conf),use.names = FALSE)
 conf <- as.numeric(as.vector(conf))
-dates <- seq.Date(as.Date("2020-1-22"),as.Date("2020-4-23"),"day")
+dates <- seq.Date(as.Date("2020-1-22"),as.Date("2020-4-28"),"day")
 #confTS <- ts(conf,start = c(2020,as.numeric(format(dates[1],"%j"))), frequency = 365)
 cDF <- data.frame(dates,conf)
-write.csv(cDF,file = "confirmed2.csv",row.names = FALSE)
+write.csv(cDF,file = "confirmed.csv",row.names = FALSE)
 
 #-----------------------death timeseries preprocessing------------
 deadDF <- read.csv("time_series_covid_19_deaths.csv",header=TRUE,sep = ",")
-deadDF <- deadDF[-1]
-deadDF <- deadDF[-1]
-deadDF <- deadDF[-1]
-deadDF <- deadDF[-1]
+Drops = c("Province.State","Country.Region","Lat","Long")
+deadDF <- deadDF[,!(names(deadDF) %in% Drops)]
 dead <- deadDF[99,]
 dead <- unlist(c(dead),use.names = FALSE)
 dead <- as.numeric(as.vector(dead))
@@ -30,10 +26,8 @@ write.csv(dDF,file = "deaths.csv",row.names = FALSE)
 
 #-----------------------recovered timeseries preprocessing------------
 recDF <- read.csv("time_series_covid_19_recovered.csv",header=TRUE,sep = ",")
-recDF <- recDF[-1]
-recDF <- recDF[-1]
-recDF <- recDF[-1]
-recDF <- recDF[-1]
+Drops = c("Province.State","Country.Region","Lat","Long")
+recDF <- recDF[,!(names(recDF)%in% Drops)]
 rec <- recDF[91,]
 rec <- unlist(c(rec),use.names = FALSE)
 rec <- as.numeric(as.vector(rec))
@@ -54,11 +48,6 @@ openDF$death <- 0
 openDF$date_confirmation[openDF$date_confirmation == "20.02.220"] <- "20.02.2020"
 #---------------------------line preprocessing----------------------
 lineDF <- read.csv("COVID19_line_list_data.csv",header = TRUE)
-lineDrops <- c("ï..id","X","X.1","X.2","X.3","X.4",
-               "X.5","X.6","source","link","symptom",
-               "case_in_country","summary","exposure_end",
-               "exposure_start","If_onset_approximated",
-               "location","country")
 lineKeeps <- c("age","gender","reporting.date","hosp_visit_date","death","recovered","symptom_onset","visiting.Wuhan","from.Wuhan")
 lineDF <- lineDF[,(names(lineDF) %in% lineKeeps)]
 names(lineDF)[1] <- "date_confirmation"
