@@ -11,8 +11,7 @@ confTS2 <- ts(confirmed2[,2],start = c(7), frequency = 7)
 plot(confTS)
 plot(confirmed$conf~as.Date(confirmed$dates,"%Y-%m-%d"))
 plot(stl(confTS,"periodic"))
-plot(diff(confTS))
-plot(log10(confTS))
+
 
 confModel <- auto.arima(confTS, approximation=FALSE, trace=FALSE)
 
@@ -23,6 +22,8 @@ lines((confPred$pred+2*confPred$se),col="orange")
 lines((confPred$pred-2*confPred$se),col="orange")
 plotarimapred((confTS), confModel, xlim=c(4,25), range.percent = 0.2)
 
+accuracy(confModel)
+accuracy(confPred$pred,confirmed$conf[92:98],simplify = FALSE)
 #-------------------------deaths-------------------------
 death <- read.table("deaths.csv", header=TRUE, sep=",")
 death$dates <- as.Date(death$dates,"%Y-%m-%d")
@@ -31,8 +32,7 @@ diedTS2 <- ts(death[,2],start = c(7), frequency = 7)
 plot(diedTS)
 plot(confirmed$conf~as.Date(confirmed$dates,"%Y-%m-%d"))
 plot(stl(diedTS,"periodic"))
-plot(diff(diedTS))
-plot(log10(diedTS))
+
 
 deathModel <- auto.arima(diedTS, approximation=FALSE, trace=FALSE)
 
@@ -42,7 +42,9 @@ lines((deathPred$pred),col="blue")
 lines((deathPred$pred+2*deathPred$se),col="orange")
 lines((deathPred$pred-2*deathPred$se),col="orange")
 plotarimapred((diedTS), deathModel, xlim=c(4,25), range.percent = 0.2)
-  
+
+accuracy(deathModel)
+accuracy(deathPred$pred,death$dead[92:98],simplify = FALSE)
 #-----------------------------recovered--------------------------------
 recovered <- read.table("recovered.csv", header=TRUE, sep=",")
 recovered$dates <- as.Date(recovered$dates,"%Y-%m-%d")
@@ -51,8 +53,7 @@ recTS2 <- ts(recovered[,2],start = c(7), frequency = 7)
 plot(recTS)
 plot(recovered$rec~as.Date(recovered$dates,"%Y-%m-%d"))
 plot(stl(recTS,"periodic"))
-plot(diff(diedTS))
-plot(log10(diedTS))
+
 
 recModel <- auto.arima(recTS, approximation=FALSE, trace=FALSE)
 
@@ -63,5 +64,7 @@ lines((recPred$pred+2*recPred$se),col="orange")
 lines((recPred$pred-2*recPred$se),col="orange")
 plotarimapred((recTS), recModel, xlim=c(4,25), range.percent = 0.2)
 
+accuracy(recModel)
+accuracy(recPred$pred,recovered$rec[92:98],simplify = FALSE)
 
 
